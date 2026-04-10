@@ -66,6 +66,13 @@ Stop deployment:
 docker compose down
 ```
 
+
+## Run automated tests
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
 ## CSV format
 
 Upload a CSV with a required `question` column:
