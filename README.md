@@ -6,6 +6,7 @@ AI-assisted AppSec RFP automation MVP for Fortify + Sonatype with compliance-ali
 
 - **Backend (FastAPI)**: CSV upload, keyword classification (SAST/DAST/SCA/SBOM), answer generation, and compliance mapping.
 - **Frontend (React + Vite)**: CSV upload UI, results table, confidence display, and CSV export.
+- **Deployment artifacts**: Dockerfiles for backend/frontend and `docker-compose.yml`.
 - **Sample dataset**: `data/sample_questions.csv`.
 - **Master prompt asset**: `prompts/openai_codex_master_prompt_appsec_compliance.md`.
 
@@ -13,12 +14,16 @@ AI-assisted AppSec RFP automation MVP for Fortify + Sonatype with compliance-ali
 
 - `backend/app/main.py` – API endpoints and processing pipeline.
 - `backend/requirements.txt` – Python dependencies.
+- `backend/Dockerfile` – backend container build.
 - `frontend/src/App.jsx` – Upload flow and results rendering.
 - `frontend/src/api.js` – Axios API client.
 - `frontend/src/styles.css` – Basic UI styling.
+- `frontend/Dockerfile` – frontend container build.
+- `frontend/nginx.conf` – static app serving config.
+- `docker-compose.yml` – multi-service deployment.
 - `data/sample_questions.csv` – Demo questions.
 
-## Run locally
+## Run locally (without Docker)
 
 ### 1) Backend
 
@@ -45,6 +50,21 @@ npm run dev
 ```
 
 Open the URL shown by Vite (usually `http://localhost:5173`).
+
+## Deploy with Docker Compose
+
+```bash
+docker compose up --build -d
+```
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8000`
+
+Stop deployment:
+
+```bash
+docker compose down
+```
 
 ## CSV format
 
