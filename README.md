@@ -1,118 +1,20 @@
 # rfp_accelerator
 
-AI-assisted AppSec RFP automation MVP for Fortify + Sonatype with compliance-aligned output.
+Automated Application Security RFP response generation using a Git repository.
 
-## What is included
+## Included assets
 
-- **Backend (FastAPI)**: CSV upload, keyword classification (SAST/DAST/SCA/SBOM), answer generation, and compliance mapping.
-- **Frontend (React + Vite)**: CSV upload UI, results table, confidence display, and CSV export.
-- **Deployment artifacts**: Dockerfiles for backend/frontend and `docker-compose.yml`.
-- **Sample dataset**: `data/sample_questions.csv`.
-- **Master prompt asset**: `prompts/openai_codex_master_prompt_appsec_compliance.md`.
+- `prompts/openai_codex_master_prompt_appsec_compliance.md`:
+  A production-grade master prompt for AppSec presales RFP automation spanning:
+  - Sonatype Nexus Lifecycle + SBOM
+  - OpenText Fortify (SAST, DAST, SCA/DeBricked, Aviator, SSC, FoD)
+  - Compliance-heavy personas for India and Sri Lanka (BFSI, public sector, private)
+  - Audit- and compliance-oriented response guardrails
 
-## Project structure
+## Usage
 
-- `backend/app/main.py` – API endpoints and processing pipeline.
-- `backend/requirements.txt` – Python dependencies.
-- `backend/Dockerfile` – backend container build.
-- `frontend/src/App.jsx` – Upload flow and results rendering.
-- `frontend/src/api.js` – Axios API client.
-- `frontend/src/styles.css` – Basic UI styling.
-- `frontend/Dockerfile` – frontend container build.
-- `frontend/nginx.conf` – static app serving config.
-- `docker-compose.yml` – multi-service deployment.
-- `data/sample_questions.csv` – Demo questions.
+Use the prompt file as a system/authoring template for:
 
-## Run locally (without Docker)
-
-### 1) Backend
-
-```bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-Health check:
-
-```bash
-curl http://localhost:8000/health
-```
-
-### 2) Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open the URL shown by Vite (usually `http://localhost:5173`).
-
-## Deploy with Docker Compose
-
-```bash
-docker compose up --build -d
-```
-
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:8000`
-
-Stop deployment:
-
-```bash
-docker compose down
-```
-
-
-## Run automated tests
-
-```bash
-python3 -m unittest discover -s tests -v
-```
-
-## CSV format
-
-Upload a CSV with a required `question` column:
-
-```csv
-question
-Does your solution support SBOM generation?
-Do you provide SAST capabilities?
-How do you manage open source vulnerabilities?
-Do you support DAST testing?
-```
-
-## API contract
-
-### `POST /upload`
-
-- **Input**: multipart/form-data with a CSV file.
-- **Output**:
-
-```json
-{
-  "count": 1,
-  "results": [
-    {
-      "question": "Does your solution support SBOM generation?",
-      "category": "SBOM",
-      "answer": "...",
-      "compliance": {
-        "RBI": "...",
-        "ISO27001": "...",
-        "OWASP": "..."
-      },
-      "confidence": 95
-    }
-  ]
-}
-```
-
-## Notes and guardrails
-
-- This MVP uses deterministic keyword rules for classification.
-- Unknown capability requests return: **"This capability is not explicitly documented"**.
-- Answers are constrained to the scoped Fortify/Sonatype capabilities in this repository's prompt and code.
+1. Building a FastAPI or Express-based RFP automation backend.
+2. Structuring RAG-based response generation with strict grounding.
+3. Generating compliance traceability outputs for presales and audit reviews.
